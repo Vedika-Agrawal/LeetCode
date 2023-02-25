@@ -10,23 +10,15 @@
  */
 class Solution {
 public:
-    void addFirst(int data, ListNode* &nhead){
-        ListNode* temp = new ListNode;
-        temp->val = data;
-        temp->next= nhead;
-        nhead = temp;
-        
-        
-    }
     ListNode* reverseList(ListNode* head) {
-        ListNode* nhead  = new ListNode;
-        ListNode* curr = head;
+        ListNode* prev=NULL, *curr = head;
         while(curr!=NULL){
-            // cout<<curr->val<<" aaaaa"<<endl;
-            addFirst(curr->val, nhead->next);
-            curr = curr->next;
+            ListNode* tmp = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr= tmp;
         }
-        return nhead->next;
+        return prev;
         
         
     }
