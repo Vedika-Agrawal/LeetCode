@@ -1,9 +1,7 @@
 # Please write a DELETE statement and DO NOT write a SELECT statement.
 # Write your MySQL query statement below
-with temp_table as (
-    SELECT id, email, row_number() over(partition by email order by id asc) as row_num
-    FROM person
+delete from Person where id not in( 
+    select t.id from (
+        select min(id) as id from Person group by email
+    ) t
 )
- DELETE from person where id in (
-     select id from temp_table where row_num <>1
- )
