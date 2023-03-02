@@ -12,12 +12,22 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        if(root==NULL)return 0;
-        int l = maxDepth(root->left);
-        int r= maxDepth(root->right);
-        
-        return max(l,r)+1;
-    
-        
+        if(!root)return 0;
+        queue<TreeNode*>q;
+        q.push(root);
+        int cnt= 0;
+        while(q.size()){
+            cnt++;
+            int size = q.size();
+            while(size--){
+                TreeNode* temp = q.front();
+                q.front();
+                q.pop();
+                if(temp->left)q.push(temp->left);
+                if(temp->right)q.push(temp->right);
+            }
+            
+        }
+        return cnt;
     }
 };
