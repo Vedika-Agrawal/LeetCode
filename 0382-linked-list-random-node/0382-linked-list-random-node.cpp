@@ -16,7 +16,7 @@ public:
     }
     
     int getRandom() {
-        int i {};
+        int i = 0;
         auto curr = node;
         ListNode* randomPointer = NULL;
         while(curr){
