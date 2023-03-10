@@ -10,20 +10,22 @@
  */
 class Solution {
 public:
-    
-    map<int,ListNode*>mp;
-    
+    ListNode* node = NULL;
     Solution(ListNode* head) {
-        ListNode* curr = head;
-        int i=0;
-        while(curr){
-            mp[i++] = curr;
-            curr = curr ->next;
-        }
+        node = head;
     }
+    
     int getRandom() {
-        int n = mp.size();
-        return mp[rand()%n]->val;
+        int i {};
+        auto curr = node;
+        ListNode* randomPointer = NULL;
+        while(curr){
+            ++i;
+            int randomIdx  = rand() % i;
+            if( i-1 == randomIdx ) randomPointer = curr;
+            curr= curr->next;
+        }
+        return randomPointer->val;
     }
 };
 
