@@ -13,7 +13,9 @@ public:
             if(n==0){ ans =  i;n++ ;}
             else{
                 n++;
-                if(rand()%n==0)ans = i;
+                int j = rand()%n;
+                if(j==0)ans =i;
+                // if(rand()%n==0)ans = i;
             }
         }
         return ans;
