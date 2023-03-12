@@ -9,6 +9,23 @@ public:
             }
         }
     }
+    
+    void bfs(int start, vector<int>&vis, vector<int>list[]){
+        vis[start]=1;
+        queue<int>q;
+        q.push(start);
+        while(q.size()>0){
+            int node = q.front(); q.pop();
+            for(auto it : list[node]){
+                
+                if(!vis[it])
+                {
+                    vis[it]=1;
+                    q.push(it);
+                }
+            }
+        }
+    }
     int findCircleNum(vector<vector<int>>& v) {
         vector<int>list[v.size()];
        
@@ -27,7 +44,7 @@ public:
         for(int i=0; i<v.size();i++){
             if(!vis[i]){
                 cnt++;
-                dfs(i, vis, list);
+                bfs(i, vis, list);
             }
         }
         return cnt;
