@@ -8,21 +8,18 @@ public:
         // bfs(grid,vis,++i,j);
         // bfs(grid,vis,i,--j);
         // // bfs(grid,vis,i,++j);
-        // vis[i][j] = 1;
-        // int di[] = {-1, 0, 1, 0};
-        // int dj[] = {0, 1, 0, -1};
-        // for (int k = 0; k < 4; k++) {
-        //     int ni = i + di[k];
-        //     int nj = j + dj[k];
-        //     bfs(grid, vis, ni, nj);
-        // }
-        // return;
         
-         vis[i][j]=1;
-        bfs(grid,vis,i-1,j);
-        bfs(grid,vis,i+1,j);
-        bfs(grid,vis,i,j-1);
-        bfs(grid,vis,i,j+1);
+        vis[i][j] = 1;
+        int di[] = {-1, 0, 1, 0};
+        int dj[] = {0, 1, 0, -1};
+        for (int k = 0; k < 4; k++) {
+            int ni = i + di[k];
+            int nj = j + dj[k];
+            bfs(grid, vis, ni, nj);
+        }
+
+        
+       
         
     }
     int numIslands(vector<vector<char>>& grid) {
