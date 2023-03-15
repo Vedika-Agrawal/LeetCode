@@ -2,33 +2,33 @@ class Solution {
 public:
     
     
-    // void dfs(vector<vector<char>>& mat, vector<vector<int>>& vis, int i, int j){
-    //     vis[i][j]=1;
-    //     vector<int>dir = {-1, 0,1,0,-1};
-    //     for(int k=0;k<4;k++){
-    //         int ni = i + dir[i];
-    //         int nj = j + dir[i+1];
-    //         if(ni>=0 && nj>=0 && ni<mat.size() && nj<mat[0].size() && !vis[i][j] && mat[i][j]=='O'){
-    //             dfs(mat,vis,ni,nj);
-    //         }
-    //     }
-    // }
-    
-    void dfs(vector<vector<char>> &mat,vector<vector<int>> &vis,int row, int col ){
-        vis[row][col] = 1; 
-        int n = mat.size();
-        int m = mat[0].size();
+    void dfs(vector<vector<char>>& mat, vector<vector<int>>& vis, int i, int j){
+        vis[i][j]=1;
         vector<int>dir = {-1, 0,1,0,-1};
-        
-        for(int i=0;i<4;i++){
-            int nrow = row + dir[i];
-            int ncol = col + dir[i+1];
-            if(nrow >=0 && nrow <n && ncol >= 0 && ncol < m 
-            && !vis[nrow][ncol] && mat[nrow][ncol] == 'O') {
-                dfs( mat,vis, nrow, ncol); 
+        for(int k=0;k<4;k++){
+            int ni = i + dir[k];
+            int nj = j + dir[k+1];
+            if(ni>=0 && nj>=0 && ni<mat.size() && nj<mat[0].size() && !vis[ni][nj] && mat[ni][nj]=='O'){
+                dfs(mat,vis,ni,nj);
             }
         }
     }
+    
+//     void dfs(vector<vector<char>> &mat,vector<vector<int>> &vis,int row, int col ){
+//         vis[row][col] = 1; 
+//         int n = mat.size();
+//         int m = mat[0].size();
+//         vector<int>dir = {-1, 0,1,0,-1};
+        
+//         for(int i=0;i<4;i++){
+//             int nrow = row + dir[i];
+//             int ncol = col + dir[i+1];
+//             if(nrow >=0 && nrow <n && ncol >= 0 && ncol < m 
+//             && !vis[nrow][ncol] && mat[nrow][ncol] == 'O') {
+//                 dfs( mat,vis, nrow, ncol); 
+//             }
+//         }
+//     }
     void solve(vector<vector<char>>& mat) {
         int n = mat.size();
         int m = mat[0].size();
