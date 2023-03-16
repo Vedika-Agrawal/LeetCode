@@ -12,16 +12,18 @@
 class Solution {
 public:
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-          int n = size(inorder), postIdx = n-1;
-        return build(inorder, postorder, 0, n-1, postIdx);
-    }
-    TreeNode* build(vector<int>& in, vector<int>& po, int st, int iend, int& postIdx) {
-        if(st>iend)return NULL;
-        TreeNode * root = new TreeNode (po[postIdx--]);
-         int idx = find(begin(in), end(in), root -> val) - begin(in);
-        root->right = build(in,po, idx+1, iend, postIdx);
-        root->left = build(in , po, st, idx-1,postIdx);
-        return root;
+        int n = inorder.size();
+        int curr = n-1;
         
+        return solve(inorder, postorder, 0, n-1, curr);
+    }
+    
+    TreeNode* solve(vector<int>& in, vector<int>& po, int st, int end, int &curr_pos ){
+        if(st>end)return NULL;
+        TreeNode* root = new TreeNode(po[curr_pos--]);
+        int idx = find(in.begin(), in.end(), root->val)-in.begin();
+        root->right = solve(in,po,idx+1,end,curr_pos);
+        root->left = solve(in,po,st,idx-1,curr_pos);
+        return root;
     }
 };
