@@ -1,23 +1,23 @@
 class Solution {
 public:
-    int maxSatisfaction(vector<int>& satisfaction) {
+    
+    int solve(vector<int>&v, int idx, int time, vector<vector<int>>&dp){
+        if(idx==v.size())return 0;
         
-        sort(satisfaction.begin(),satisfaction.end());
-        int n = satisfaction.size();
+        if(dp[idx][time]!=-1)return dp[idx][time];
         
-        int Cumulative_sum = 0; // From back
+        int incl = v[idx]* (time +1) + solve(v,idx+1,time+1,dp);
+        int excl = solve(v,idx+1,time,dp);
         
-        int ans = 0;
-        int cur = 0;
-        for(int i = n-1;i>=0;i--)
-        {
-            cur += Cumulative_sum + satisfaction[i];
-            Cumulative_sum += satisfaction[i];
-            
-            ans = max(ans,cur);
-        }
+        dp[idx][time]= max(incl,excl);
         
-        return ans;
-        
+        return max(incl,excl);
+    }
+    int maxSatisfaction(vector<int>& v) {
+        sort(v.begin(),v.end());
+        int n = v.size();
+        vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
+
+        return solve(v,0,0,dp);
     }
 };
