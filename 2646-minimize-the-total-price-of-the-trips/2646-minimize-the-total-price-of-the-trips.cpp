@@ -48,9 +48,9 @@ public:
          memset(freq,0, sizeof freq);
         
         
-        for(int i=0;i<n;i++){
-            adj[i].clear();
-        }
+        // for(int i=0;i<n;i++){
+        //     adj[i].clear();
+        // }
         
         for(auto it : edges){
             adj[it[0]].push_back(it[1]);
