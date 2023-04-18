@@ -36,10 +36,12 @@ public:
     void solve(TreeNode* root, int sib, int level){
         if(!root)return;
         
+         root->val = levelSum[level] - root->val - sib;
+        
         int leftChild = root->left ? root->left->val : 0; // 4     1  0 
         int rightChild = root->right ? root->right->val : 0; // 9   10  0
         
-        root->val = levelSum[level] - root->val - sib;
+       
        
          solve(root->left, rightChild, level+1);
          solve(root->right, leftChild, level+1);
