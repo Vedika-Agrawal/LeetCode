@@ -1,45 +1,31 @@
 class Solution {
 public:
+    typedef unsigned long long ll;
     int widthOfBinaryTree(TreeNode* root) {
-        if(root == NULL)
+        if(!root)   
             return 0;
+        queue<pair<TreeNode*, ll>> que;
+        que.push({root, 0});
+        ll maxWidth = 0;
         
-        int res = 1;
-        queue<pair<TreeNode*, int>> q;
-        
-        // I am using intialising list
-        q.push({root, 0});      // also can use make_pair
-        
-        while(!q.empty())
-        {
-            int cnt = q.size();
-            // start is the index of root node for first level
-            int start = q.front().second;
-            int end = q.back().second;
+        while(!que.empty()) {
+            int n = que.size();
+            ll f = que.front().second;
+            ll l = que.back().second;
+            maxWidth = max(maxWidth, l-f+1);
             
-            res = max(res,end-start + 1);
-            
-            for(int i = 0; i <cnt; ++i)
-            {
-                pair<TreeNode*, int> p = q.front();
-                // we will use it while inserting it children
-                // left child will be 2 * idx + 1;
-                // right chils will be 2 * idx + 2;
-                int idx = p.second - start;
-                
-                q.pop();
-                
-                // if  left child exist
-                if(p.first->left != NULL)
-                    q.push({p.first->left, (long long)2 * idx + 1});
-                
-                // if right child exist
-                if(p.first->right != NULL)
-                    q.push({p.first->right, (long long) 2 * idx + 2});
+            while(n--) {
+                TreeNode* curr = que.front().first;
+                ll d          = que.front().second;
+                que.pop();
+                if(curr->left) {
+                    que.push({curr->left, 2*d+1});
+                }
+                if(curr->right) {
+                    que.push({curr->right, 2*d+2});
+                }
             }
         }
-        
-        return res;
-        
+        return maxWidth;
     }
 };
