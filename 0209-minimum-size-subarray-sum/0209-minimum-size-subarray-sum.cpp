@@ -5,10 +5,10 @@ public:
         int sum = 0 ;
         int i= 0; int j= 0;
         while(j<nums.size()){
-
+            while(j<nums.size() && sum<target){
                 sum+=nums[j];
                 j++;
-                
+            }
             
             while(sum>=target){
                 ans = min(ans,j-i);
