@@ -1,32 +1,24 @@
+class Solution {
+public:
+vector<int>  parent1, size1, parent2, size2;
+int remove = 0;
+int findUPar1(int node) {
+if (node == parent1[node])
+return node;
+return parent1[node] = findUPar1(parent1[node]);
 }
+int findUPar2(int node) {
+if (node == parent2[node])
+return node;
+return parent2[node] = findUPar2(parent2[node]);
 }
-void unionBySize2(int u, int v) {
-int ulp_u = findUPar2(u);
-int ulp_v = findUPar2(v);
+void unionBySize1(int u, int v) {
+int ulp_u = findUPar1(u);
+int ulp_v = findUPar1(v);
+if (ulp_u == ulp_v)
 {
 remove++;
 return;
 }
-if (size2[ulp_u] < size2[ulp_v]) {
-parent2[ulp_u] = ulp_v;
-size2[ulp_v] += size2[ulp_u];
-}
-else {
-parent2[ulp_v] = ulp_u;
-size2[ulp_u] += size2[ulp_v];
-}
-}
-int maxNumEdgesToRemove(int n, vector<vector<int>>& edges) {
-parent1.resize(n + 1);
-size1.resize(n + 1);
-for (int i = 0; i <= n; i++) {
-parent1[i] = i;
-size1[i] = 1;
-}
-parent2.resize(n + 1);
-size2.resize(n + 1);
-for (int i = 0; i <= n; i++) {
-parent2[i] = i;
-size2[i] = 1;
-}
-for(auto it : edges){
+if (size1[ulp_u] < size1[ulp_v]) {
+parent1[ulp_u] = ulp_v;
