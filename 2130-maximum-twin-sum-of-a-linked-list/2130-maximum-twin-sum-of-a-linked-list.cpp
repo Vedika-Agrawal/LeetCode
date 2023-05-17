@@ -1,22 +1,37 @@
 class Solution {
 public:
     int pairSum(ListNode* head) {
-        ListNode* current = head;
-        vector<int> values;
-
-        while (current) {
-            values.push_back(current->val);
-            current = current->next;
+        ListNode* mid = NULL;
+        
+        ListNode* slow = head;
+        ListNode* fast = head;
+        
+        while(fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
-
-        int i = 0, j = values.size() - 1;
-        int maximumSum = 0;
-        while (i < j) {
-            maximumSum = max(maximumSum, values[i] + values[j]);
-            i++;
-            j--;
+        mid = slow;
+        
+        //Reversing Part
+        ListNode* nextNode = NULL;
+        ListNode* prev = NULL;
+        while(mid) {
+            nextNode = mid->next;
+            mid->next = prev;
+            prev = mid;
+            mid = nextNode;
         }
-
-        return maximumSum;
+        //Reversing Part
+        
+        ListNode* curr = head;
+        int result = 0;
+        while(prev) {
+            result = max(result, curr->val + prev->val);
+            curr = curr->next;
+            prev = prev->next;
+        }
+        
+        return result;
+        
     }
 };
