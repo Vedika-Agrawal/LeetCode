@@ -1,16 +1,23 @@
 class Solution {
 public:
+    
+     ListNode* middleNode(ListNode* head) {
+        if(head==NULL || head->next==NULL)return head;
+        ListNode* fst= head, *slw = head;
+        while(fst!=NULL && fst->next!=NULL){
+            slw= slw->next;
+            fst= fst->next->next;
+        }
+        return slw;
+        
+    }
+    
     int pairSum(ListNode* head) {
         ListNode* mid = NULL;
         
-        ListNode* slow = head;
-        ListNode* fast = head;
+
         
-        while(fast && fast->next) {
-            slow = slow->next;
-            fast = fast->next->next;
-        }
-        mid = slow;
+        mid =  middleNode(head);
         
         //Reversing Part
         ListNode* nextNode = NULL;
