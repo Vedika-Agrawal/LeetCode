@@ -12,22 +12,38 @@ public:
         
     }
     
+     ListNode* solve(ListNode* head) {
+        ListNode* prev=NULL, *curr = head;
+        while(curr!=NULL){
+            ListNode* tmp = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr= tmp;
+        }
+        return prev;
+        
+        
+    }
+    
     int pairSum(ListNode* head) {
         ListNode* mid = NULL;
         
 
-        
-        mid =  middleNode(head);
-        
-        //Reversing Part
-        ListNode* nextNode = NULL;
         ListNode* prev = NULL;
-        while(mid) {
-            nextNode = mid->next;
-            mid->next = prev;
-            prev = mid;
-            mid = nextNode;
-        }
+        mid =  middleNode(head);
+        prev = solve(mid);
+        mid->next =NULL;
+        //Reversing Part
+        // ListNode* nextNode = NULL;
+        // ListNode* prev = NULL;
+        // while(mid) {
+        //     nextNode = mid->next;
+        //     mid->next = prev;
+        //     prev = mid;
+        //     mid = nextNode;
+        // }
+        
+        
         //Reversing Part
         
         ListNode* curr = head;
