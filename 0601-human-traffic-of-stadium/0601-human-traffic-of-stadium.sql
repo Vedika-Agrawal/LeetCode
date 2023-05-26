@@ -5,5 +5,7 @@ where s1.people>=100 and s2.people>=100 and s3.people>=100
      or
      (s1.id=s2.id+1 and s1.id = s3.id-1 ) 
      or 
-     (s1.id=s2.id+1 and s1.id = s3.id+2 ))
+     (s1.id=s3.id+1 and s1.id = s2.id+2 ))
      order by id;
+     
+     
