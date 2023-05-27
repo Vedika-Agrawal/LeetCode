@@ -1,17 +1,8 @@
 # Write your MySQL query statement below
-
-select
-(
-    case 
-    when mod(id,2)!=0 and counts !=id then id+1
-    when mod(id,2)!=0 and counts = id then id
-    else id-1
-    end
-) as id,
-student
-
-FROM
-seat,
-( select count(*) as counts from seat ) as seat_counts
-
-order by id asc;
+select (CASE 
+    WHEN id%2=1 and id!=(select count(*) from Seat) THEN id+1
+    WHEN id%2=0 THEN id-1
+    ELSE id
+    END) id,student
+from Seat 
+order by id;
