@@ -1,16 +1,15 @@
 class Solution {
 public:
-    int maxProfit(vector<int>& p) {
-        int prf =0 ;
-        int mini = INT_MAX;
-        for(int i=0;i<p.size();i++){
-            if(mini>p[i]){
-                mini = p[i];
-            }
-            if(prf< p[i]-mini){
-                prf = p[i]-mini;
-            }
+    
+    int maxProfit(vector<int>& v) {
+        int mini = v[0];
+        int ans =INT_MIN ;
+        for(int i=0;i<v.size();i++){
+        
+            mini =min(mini, v[i]);
+            ans = max(ans, v[i]-mini);
+            
         }
-        return prf;
+        return ans;
     }
 };
