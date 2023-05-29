@@ -22,3 +22,9 @@ if (nums[l] > nums[k]) {
 break;
 }
 }
+swap(nums[k], nums[l]);
+reverse(nums.begin() + k + 1, nums.end());
+}
+}
+};
+​
