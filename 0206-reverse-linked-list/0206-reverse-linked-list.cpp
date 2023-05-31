@@ -9,16 +9,18 @@
  * };
  */
 class Solution {
+    
+     ListNode* solve(ListNode* head) {
+        if( !head || !head->next) return head;
+        ListNode* prev = NULL;
+        ListNode* h2 = reverseList(head->next);
+        head->next->next = head;
+        head->next=prev;
+        return h2;
+    }
 public:
     
     ListNode* reverseList(ListNode* head) {
-        ListNode* curr = head , * prev = NULL;
-        while(curr){
-            ListNode* fwd = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr=fwd;
-        }
-        return prev;
+      return solve(head);
     }
 };
