@@ -12,28 +12,36 @@ public:
            for (int j = i + 1; j < n; j++) {
                  if (j > i + 1 && nums[j] == nums[j - 1]) continue;
               
-              int k = j + 1;
-            int l = n - 1;
-            while (k < l) {
-                long long sum = nums[i];
+                
+               int l = j + 1;
+               int r = n - 1;
+                
+                while(l<r){
+                    
+                    long long sum = nums[i];
                 sum += nums[j];
-                sum += nums[k];
+                sum += nums[r];
                 sum += nums[l];
-                   if (sum == tar) {
-                    vector<int> temp = {nums[i], nums[j], nums[k], nums[l]};
-                    ans.push_back(temp);
-                    k++; l--;
-
-                    //skip the duplicates:
-                    while (k < l && nums[k] == nums[k - 1]) k++;
-                    while (k < l && nums[l] == nums[l + 1]) l--;
+                    
+                    if(sum==tar){
+                        ans.push_back({nums[i],nums[j],nums[l],nums[r]});
+                        l++,r--;
+                       
+                        while(l<r && nums[l]==nums[l-1])l++;
+                        while(l<r && nums[r]==nums[r+1])r--;
+                        
+                    }
+                    else if(sum<tar){
+                        l++;
+                    }
+                    else{
+                        r--;
+                    }
                 }
-                else if (sum < tar) k++;
-                else l--;
+                
             }
+           
         }
+        return ans;
     }
-
-    return ans;
-}
 };
