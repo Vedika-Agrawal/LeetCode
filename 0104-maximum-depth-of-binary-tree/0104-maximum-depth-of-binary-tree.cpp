@@ -14,9 +14,9 @@ public:
     
     int solve(TreeNode* root){
         if(!root)return 0;
-        int left = solve(root->left) +1;
-        int right = solve(root->right)+1;
-        return max(left,right);
+        int left = solve(root->left) ;
+        int right = solve(root->right);
+        return max(left,right)+1;
     }
     int maxDepth(TreeNode* root) {
         if(root==NULL)return 0;
