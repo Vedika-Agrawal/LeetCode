@@ -11,19 +11,20 @@
  */
 class Solution {
 public:
-    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-        int n = inorder.size();
-        int curr = n-1;
-        
-        return solve(inorder, postorder, 0, n-1, curr);
-    }
     
-    TreeNode* solve(vector<int>& in, vector<int>& po, int st, int end, int &curr_pos ){
+    TreeNode* solve(vector<int>& in, vector<int>& post, int &idx, int st, int end){
         if(st>end)return NULL;
-        TreeNode* root = new TreeNode(po[curr_pos--]);
-        int idx = find(in.begin(), in.end(), root->val)-in.begin();
-        root->right = solve(in,po,idx+1,end,curr_pos);
-        root->left = solve(in,po,st,idx-1,curr_pos);
-        return root;
+        TreeNode* node  = new TreeNode(post[idx]);
+        int temp = find(in.begin(), in.end(), node->val)-in.begin();
+        idx--;
+         node->right = solve(in, post, idx, temp+1, end);
+        node->left  = solve(in, post, idx, st, temp-1);
+       
+        return node;
+    }
+    TreeNode* buildTree(vector<int>& in, vector<int>& post) {
+        int n = post.size()-1;
+        return solve(in,post, n, 0,n);
     }
 };
+
