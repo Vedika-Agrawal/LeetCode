@@ -11,16 +11,20 @@
  */
 class Solution {
 public:
-    #define ll long long
-    bool solve(TreeNode* root, ll l, ll r){
-        if(!root) return true;
-        if(root->val<=l || root->val >= r)return false;
-        
-        
-       return solve(root->left, l, root->val) &&  solve(root->right , root->val, r) ;
-        
-    }
+    #define ll long long 
+    ll prev  = LONG_MIN;
     bool isValidBST(TreeNode* root) {
-        return solve(root, LONG_MIN,LONG_MAX);
+        if(!root)return true;
+       bool x = isValidBST(root->left);
+        if(root){
+            if(root->val<= prev)return false; 
+            else{
+                prev  = root->val;
+            }
+        }
+         bool y = isValidBST(root->right);
+        return x&& y;
+        
+        
     }
 };
