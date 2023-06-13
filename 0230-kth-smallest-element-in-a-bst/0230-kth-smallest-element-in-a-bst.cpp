@@ -11,18 +11,31 @@
  */
 class Solution {
 public:
-    
-    TreeNode* helper(TreeNode* root, int &k){
-        if(root==NULL )return NULL;
-        TreeNode* node = helper(root->left, k);
-        if(node!=NULL)return node;
-        k--;
-        if(k==0)return root;
-        return helper(root->right, k);
+    int cnt = 0 ;
+    int ans = INT_MIN;
+    void solve(TreeNode* root, int k){
+        if(root==NULL)return ;
+       
+        solve(root->left, k);
+        cnt++;
+        if(k==cnt)
+        ans = root->val;
+
+        
+        solve(root->right,k);
+           
+           
     }
+    
+//     public void traverse(TreeNode root, int k) {
+//     if(root == null) return;
+//     traverse(root.left, k);
+//     count ++;
+//     if(count == k) result = root.val;
+//     traverse(root.right, k);       
+// }
     int kthSmallest(TreeNode* root, int k) {
-        // int cnt = 0;
-        TreeNode * ans = helper(root, k );
-        return ans ? ans->val : -1;
+        solve(root, k);
+        return ans;
     }
 };
