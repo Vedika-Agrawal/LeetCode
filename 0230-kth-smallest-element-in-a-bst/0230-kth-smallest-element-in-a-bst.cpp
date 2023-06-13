@@ -11,31 +11,43 @@
  */
 class Solution {
 public:
-    int cnt = 0 ;
-    int ans = INT_MIN;
-    void solve(TreeNode* root, int k){
-        if(root==NULL)return ;
+//     int cnt = 0 ;
+//     int ans = INT_MIN;
+//     void solve(TreeNode* root, int k){
+//         if(root==NULL)return ;
        
-        solve(root->left, k);
-        cnt++;
-        if(k==cnt)
-        ans = root->val;
+//         solve(root->left, k);
+//         cnt++;
+//         if(k==cnt)
+//         ans = root->val;
 
         
-        solve(root->right,k);
+//         solve(root->right,k);
            
            
-    }
+//     }
     
-//     public void traverse(TreeNode root, int k) {
-//     if(root == null) return;
-//     traverse(root.left, k);
-//     count ++;
-//     if(count == k) result = root.val;
-//     traverse(root.right, k);       
-// }
+//     int kthSmallest(TreeNode* root, int k) {
+//         solve(root, k);
+//         return ans;
+//     }
+    int ans;
+    void solve(TreeNode* root,int k,int &i){
+        if(!root){
+            return;
+        }
+        solve(root->left,k,i);
+        i++;
+        if(i==k){
+            ans=root->val;
+            // return;
+        }
+        
+        solve(root->right,k,i);
+    }
     int kthSmallest(TreeNode* root, int k) {
-        solve(root, k);
+        int i=0;
+        solve(root,k,i);
         return ans;
     }
 };
