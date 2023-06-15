@@ -19,27 +19,27 @@ public:
             int sz = q.size();
             
             
-//             while(sz--){
-//                 int node = q.front().first;
-//                 int dis  =q.front().second;
-//                 q.pop();
-//                 for(auto it: adj[node]){
-                    
-//                     if(it.second +dis >= distance[node]) continue;
-//                     distance[node ]= it.second+dis;
-//                     q.push({it.first, distance[node]});
-//                 }
-//             }
-             while (sz--) {
-                auto [node, distance] = q.front();
+            while(sz--){
+                int node = q.front().first;
+                int dis  =q.front().second;
                 q.pop();
-                // Iterate over neighbors of popped node.
-                for (auto& [neighbour, price] : adj[node]) {
-                    if (price + distance >= dist[neighbour]) continue;
-                    dist[neighbour] = price + distance;
-                    q.push({neighbour, dist[neighbour]});
+                for(auto it: adj[node]){
+                    
+                    if(it.second +dis >= dist[it.first]) continue;
+                    dist[it.first ]= it.second+dis;
+                    q.push({it.first, dist[it.first]});
                 }
             }
+//              while (sz--) {
+//                 auto [node, distance] = q.front();
+//                 q.pop();
+//                 // Iterate over neighbors of popped node.
+//                 for (auto& [neighbour, price] : adj[node]) {
+//                     if (price + distance >= dist[neighbour]) continue;
+//                     dist[neighbour] = price + distance;
+//                     q.push({neighbour, dist[neighbour]});
+//                 }
+//             }
             
             level++;
             
