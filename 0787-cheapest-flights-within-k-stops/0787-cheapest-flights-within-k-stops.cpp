@@ -1,38 +1,30 @@
 class Solution {
 public:
-    int findCheapestPrice(int n, vector<vector<int>>& plane, int src, int dst, int k) {
-        vector<pair<int,int>>adj[n];
-        
-        for(auto it : plane){
-            adj[it[0]].push_back({it[1],it[2]});
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+        vector<vector<pair<int, int>>> adj(n);
+        for (auto& e : flights) {
+            adj[e[0]].push_back({e[1], e[2]});
         }
-        
-        vector<int>dis(n,1e9);
-        dis[src] = 0;
-        
-        queue<pair<int,pair<int,int>>>q;
-        q.push({0,{src,0}});
-        
-        while(!q.empty()){
-             auto it = q.front();
-            q.pop();
-            int stop = it.first;
-            int v = it.second.first;
-            int wt = it.second.second;
-            
-            for(auto it: adj[v]){
-                int adjNode = it.first;
-                int cost = it.second;
-                
-                if(cost + wt < dis[adjNode] && stop<=k){
-                    dis[adjNode]= cost + wt;
-                    q.push({stop+1, {adjNode,cost+wt}});
+        vector<int> dist(n, numeric_limits<int>::max());
+        queue<pair<int, int>> q;
+        q.push({src, 0});
+        int stops = 0;
+
+        while (stops <= k && !q.empty()) {
+            int sz = q.size();
+            // Iterate on current level.
+            while (sz--) {
+                auto [node, distance] = q.front();
+                q.pop();
+                // Iterate over neighbors of popped node.
+                for (auto& [neighbour, price] : adj[node]) {
+                    if (price + distance >= dist[neighbour]) continue;
+                    dist[neighbour] = price + distance;
+                    q.push({neighbour, dist[neighbour]});
                 }
             }
+            stops++;
         }
-        if(dis[dst]==1e9)return -1;
-        return dis[dst];
-        
-        
+        return dist[dst] == numeric_limits<int>::max() ? -1 : dist[dst];
     }
 };
