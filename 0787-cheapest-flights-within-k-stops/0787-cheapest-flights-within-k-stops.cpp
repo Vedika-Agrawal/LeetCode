@@ -1,19 +1,36 @@
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        vector<vector<pair<int, int>>> adj(n);
-        for (auto& e : flights) {
-            adj[e[0]].push_back({e[1], e[2]});
+        unordered_map<int, vector< pair<int,int>>>adj(n);
+        // int ans = INT_MAX;
+        vector<int> dist(n, INT_MAX);
+        for(auto it: flights){
+            adj[it[0]].push_back({it[1],it[2]});
         }
-        vector<int> dist(n, numeric_limits<int>::max());
-        queue<pair<int, int>> q;
-        q.push({src, 0});
-        int stops = 0;
-
-        while (stops <= k && !q.empty()) {
+        // queue<pair<int,pair<int,int>>>q;
+        
+        queue<pair<int,int>>q;
+        q.push({src,0});
+        int level  = 0;
+        
+        while(level<=k && q.size() ){
+            
+            
             int sz = q.size();
-            // Iterate on current level.
-            while (sz--) {
+            
+            
+//             while(sz--){
+//                 int node = q.front().first;
+//                 int dis  =q.front().second;
+//                 q.pop();
+//                 for(auto it: adj[node]){
+                    
+//                     if(it.second +dis >= distance[node]) continue;
+//                     distance[node ]= it.second+dis;
+//                     q.push({it.first, distance[node]});
+//                 }
+//             }
+             while (sz--) {
                 auto [node, distance] = q.front();
                 q.pop();
                 // Iterate over neighbors of popped node.
@@ -23,8 +40,10 @@ public:
                     q.push({neighbour, dist[neighbour]});
                 }
             }
-            stops++;
+            
+            level++;
+            
         }
-        return dist[dst] == numeric_limits<int>::max() ? -1 : dist[dst];
+        return dist[dst] == INT_MAX ? -1 : dist[dst];
     }
 };
