@@ -5,3 +5,6 @@ SELECT email from (select email, count(email) as cnt from person group by email)
 # from Person
 # group by Email
 # having count(email) > 1
+​
+​
+​
