@@ -12,16 +12,20 @@ public:
             ans = max(ans, count);
             return;
         }
+        
+        // Not-take
+        // indegree[requests[start][0]]++;
+        // indegree[requests[start][1]]--;
+        helper(start + 1,requests, indegree, n, count);
 
         // Take 
         indegree[requests[start][0]]--;
         indegree[requests[start][1]]++;
         helper(start + 1,requests, indegree, n, count + 1);
-
-        // Not-take
         indegree[requests[start][0]]++;
         indegree[requests[start][1]]--;
-        helper(start + 1,requests, indegree, n, count);
+
+        
     }
     
     int maximumRequests(int n, vector<vector<int>>& requests) {
