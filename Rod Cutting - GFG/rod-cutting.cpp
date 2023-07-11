@@ -27,8 +27,21 @@ class Solution{
     }
     int cutRod(int arr[], int N) {
         length = N;
-        vector<vector<int>>dp(N, vector<int>(N+1,-1));
-        return solve(arr, 0, N,dp);
+        vector<vector<int>>dp(N+1, vector<int>(N+1,0));
+        for(int idx = N-1; idx>=0; idx--){
+            for(int n =0 ; n<= N; n++){
+                
+                int notTake = dp[idx+1][n]; 
+                int take = 0;
+                int len = idx+1;
+                if(len<= n){
+                    take = arr[idx] + dp[idx][ n - len]; 
+                }
+                dp[idx][n] =  max(take , notTake);
+                
+             }
+        }
+        return dp[0][N];
     }
 };
 
