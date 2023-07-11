@@ -9,14 +9,16 @@
  */
 class Solution {
 public:
-    vector<int> distanceK(TreeNode* root, TreeNode* t, int k) {
+    
+    vector<int> distanceK(TreeNode* root, TreeNode* tar, int k) {
+        vector<int>ans;
+        
         unordered_map<TreeNode*,TreeNode*>parent;
         unordered_map<TreeNode*, int>visited;
-        queue<TreeNode*>q;
-        q.push(root);
         
-        // parent set 
-        while(q.size()>0){
+         queue<TreeNode*>q;
+        q.push(root);
+         while(q.size()>0){
             TreeNode* curr = q.front(); q.pop();
             if(curr->left){
                 parent[curr->left]=curr;
@@ -28,37 +30,32 @@ public:
             }
         }
         
-        q.push(t);
-        visited[t]=true;
-        int curr_level = 0;
-        while(q.size()>0){
-            if(curr_level++==k)break;
+        // queue<TreeNode*>q;
+        
+        q.push(tar);
+        
+        visited[tar]=true;
+        while(q.size()){
             int sz = q.size();
-            
-            for(int i=0;i<sz;i++){
-                TreeNode* curr = q.front(); q.pop();
-                // left 
-                if(curr->left && !visited[curr->left]){
-                    q.push(curr->left);
-                    visited[curr->left]=true;
+            while(sz--){
+                auto it = q.front(); q.pop();
+                if(k==0){
+                    ans.push_back(it->val);
                 }
-                // right
-                if(curr->right && !visited[curr->right]){
-                    q.push(curr->right);
-                    visited[curr->right]=true;
+                if(it->left && !visited[it->left]){
+                    visited[it->left]= true;
+                    q.push(it->left);
                 }
-                // parent
-                if(parent[curr] && !visited[parent[curr]]){
-                    q.push(parent[curr]);
-                    visited[parent[curr]]=true;
+                if(it->right && !visited[it->right]){
+                    visited[it->right]= true;
+                    q.push(it->right);
+                }
+                if(parent[it] && !visited[parent[it]]){
+                    visited[parent[it]]=true;
+                    q.push(parent[it]);
                 }
             }
-        }
-        
-        vector<int>ans;
-        while(q.size()>0){
-            ans.push_back(q.front()->val);
-            q.pop();
+            k--;
         }
         return ans;
     }
