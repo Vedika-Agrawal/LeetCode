@@ -1,17 +1,40 @@
+
 class Solution {
-    vector<vector<unordered_map<int, int>>> mp;
-    int solve(vector<vector<int>>& e, int k, int pre_end, int i)  {
-        if(i >= e.size() || k == 0) return 0;
-        if(mp[i][k].count(pre_end)) return mp[i][k][pre_end];
-        mp[i][k][pre_end] = 0;
-        if(pre_end < e[i][0]) 
-            mp[i][k][pre_end]  = solve(e, k-1, e[i][1], i+1) + e[i][2];
-        return mp[i][k][pre_end] = max(mp[i][k][pre_end] ,  solve(e, k, pre_end, i+1));
-    }
 public:
-    int maxValue(vector<vector<int>>& e, int k) {
-        sort(begin(e), end(e));
-        mp.resize(e.size(), vector<unordered_map<int, int>>(k+1));
-        return solve(e,k, -1, 0);
+    int n;
+    typedef vector<int> p;
+    int solve(vector<vector<int>>&nums, int k, int idx, int prev, vector<p>&dp){
+        if(idx==n || k==0)return 0;
+        if(dp[k][prev+1]!=-1)return dp[k][prev+1];
+        int consider = 0;
+        int notConsider = solve(nums, k, idx+1, prev,dp);
+        if(prev==-1){
+            int val = nums[idx][2];
+            
+            consider = val + solve(nums, k-1 ,idx+1, idx,dp);
+        }
+        else{
+            int pst = nums[prev][0];
+            int pend = nums[prev][1];
+            int pval = nums[prev][2];
+            
+            int cst = nums[idx][0];
+            int cend = nums[idx][1];
+            int cval = nums[idx][2];
+            
+            if(pend < cst){
+                consider =  cval + solve(nums, k-1, idx+1, idx,dp);
+            }
+            
+        }
+        return  dp[k][prev+1]= max(consider, notConsider);
+        
+        
+    }
+    int maxValue(vector<vector<int>>& nums, int k) {
+        n = nums.size();
+        sort(nums.begin(),nums.end());
+        vector<p>dp(k+1, p(n+1, -1));
+        return solve(nums, k,0, -1,dp);
     }
 };
