@@ -12,7 +12,7 @@ public:
     //     }
     //     return true;
     // }
-     bool isPalindrome(string &s, int i, int j) {
+    bool isPalindrome( string &s, int i, int j) {
         while (i < j) {
             if (s[i] != s[j]) return false;
             i++;
@@ -24,9 +24,9 @@ public:
         if(i>=j){
             return 0;
         }
-        // if(isPalindrome(s,i,j)){
-        //     return 0;
-        // }
+        if(isPalindrome(s,i,j)){
+            return 0;
+        }
         if(dp[i][j]!=-1){
             return dp[i][j];
         }
@@ -34,7 +34,7 @@ public:
         for(int k=i;k<j;k++){
             if(isPalindrome(s,i,k)){
                 int a=1+solve(s,k+1,j);
-                ans=min(ans,a);
+                dp[i][j]=ans=min(ans,a);
             }
         }
         return dp[i][j]=ans;
@@ -47,7 +47,7 @@ public:
         if(isPalindrome(s,0,s.size()-1)){
             return 0;
         }
-        dp.resize(n+1,vector<int>(n+1,-1));
-        return solve(s,0,n)-1;
+        dp.resize(n,vector<int>(n,-1));
+        return solve(s,0,n-1);
     }
 };
