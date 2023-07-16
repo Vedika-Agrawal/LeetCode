@@ -2,24 +2,24 @@ class Solution {
 public:
     int n;
     vector<vector<int>> dp;
-    // bool isPalindrome(string s,int i,int j){
-    //     while(i<=j){
-    //         if(s[i]!=s[j]){
-    //             return false;
-    //         }
-    //         i++;
-    //         j--;
-    //     }
-    //     return true;
-    // }
-    bool isPalindrome( string &s, int i, int j) {
-        while (i < j) {
-            if (s[i] != s[j]) return false;
+    bool isPalindrome(string &s,int i,int j){
+        while(i<j){
+            if(s[i]!=s[j]){
+                return false;
+            }
             i++;
             j--;
         }
         return true;
     }
+    // bool isPalindrome( string &s, int i, int j) {
+    //     while (i < j) {
+    //         if (s[i] != s[j]) return false;
+    //         i++;
+    //         j--;
+    //     }
+    //     return true;
+    // }
     int solve(string &s,int i,int j){
         if(i>=j){
             return 0;
