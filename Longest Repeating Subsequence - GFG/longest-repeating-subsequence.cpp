@@ -22,8 +22,21 @@ class Solution {
 	}
 		int LongestRepeatingSubsequence(string str){
 		    n = str.size();
-		    dp.resize(n+1, vector<int>(n+1, -1));
-		    return solve(str, 0, 0);
+		    dp.resize(n+1, vector<int>(n+1, 0));
+		    for(int i= n-1; i>=0;i--){
+		        for(int j= n-1; j>=0; j--){
+		            int take =0, notTake =0;
+            	    if(i!=j && str[i]==str[j]){
+            	        take = 1 + dp[i+1][ j+1];
+            	    }
+            	    else{
+            	        notTake =  dp[i+1][ j];
+            	        notTake = max(notTake,  dp[i][ j+1]);
+            	    }
+            	    dp[i][j] = max(take, notTake);
+		        }
+		    }
+		    return dp[0][0];
 		}
 
 };
