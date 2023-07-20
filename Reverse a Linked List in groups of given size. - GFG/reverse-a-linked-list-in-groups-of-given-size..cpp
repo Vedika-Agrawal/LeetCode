@@ -49,51 +49,43 @@ void printList(struct node *node)
 class Solution
 {
     public:
-    struct node *oh= NULL, *ot = NULL, *th, *tt , *curr, *fwd=NULL;
-    
-    void addFirst(struct node* root){
-        root->next= NULL;
-        if(tt==NULL){
-            th = root;
-            tt = root;
-        
+    void addFirst(node* &nod,node* &th,node* &tt){
+        nod->next= NULL;
+        if(!th){
+            th=nod;
+            tt=nod;
         }
         else{
-            root->next = th;
-        th = root;
+            nod->next=th;
+            th=nod;
         }
-        
-        
     }
-    
     struct node *reverse (struct node *head, int k)
     { 
-        curr = head;
-        int ok = k ;
-        while(curr){
-           th=NULL, tt=NULL;
-            k = ok;
-            while(curr && k-- ){
-                fwd = curr->next;
-                addFirst(curr);
-                curr = fwd;
+        // Complete this method
+        node* oh=NULL,*ot=NULL,*th=NULL,*tt=NULL;
+        int t=k;
+        while(head){
+            while(head && k>0){
+                node* prev=head->next;
+                addFirst(head,th,tt);
+                head=prev;
+                k--;
             }
-            if(oh==NULL){
-                oh = th;
-                ot= tt;
+            if(!oh && !ot){
+                oh=th;
+                ot=tt;
             }
             else{
-                ot->next = th;
-                ot = tt;
+                ot->next=th;
+                ot=tt;
             }
+            th=NULL,tt=NULL;
+            k=t;
         }
         return oh;
-        
-        
-        
     }
 };
-
 
 //{ Driver Code Starts.
 
