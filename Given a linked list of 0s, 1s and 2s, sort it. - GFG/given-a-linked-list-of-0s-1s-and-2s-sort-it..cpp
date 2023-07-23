@@ -33,33 +33,69 @@ class Solution
 {
     public:
     //Function to sort a linked list of 0s, 1s and 2s.
-    Node* segregate(Node *head) {
-        Node* one = new Node(-1);
-        Node* zero = new Node(-1);
-        Node* two = new Node(-1);
-        Node* curr = head;
-        Node* o = one, *t = two, *z = zero;
+   Node* segregate(Node *head) {
         
-        while(curr){
-            Node* fwd = curr->next;
-            curr->next = NULL;
-            if(curr->data==0){
-                z->next = curr;
-                z = curr;
+        // Add code here
+        Node* zh=NULL,*zt=NULL,*oh=NULL,*ot=NULL,*th=NULL,*tt=NULL;
+        while(head){
+            if(head->data==1){
+                Node* t=head->next;
+                if(!oh){
+                    oh=head;
+                    ot=head;
+                }
+                else{
+                    ot->next=head;
+                    ot=head;
+                }
+                ot->next=NULL;
+                head=t;
             }
-            else if(curr->data==1){
-                 o->next = curr;
-                o = curr;
+            else if(head->data==2){
+                Node* t=head->next;
+                if(!th){
+                    th=head;
+                    tt=head;
+                }
+                else{
+                    tt->next=head;
+                    tt=head;
+                }
+                tt->next=NULL;
+                head=t;
             }
             else{
-                 t->next = curr;
-                t= curr;
+                Node* t=head->next;
+                if(!zh){
+                    zh=head;
+                    zt=head;
+                }
+                else{
+                    zt->next=head;
+                    zt=head;
+                }
+                zt->next=NULL;
+                head=t;
             }
-            curr = fwd;
         }
-        o->next = two->next;
-        z->next = one->next;
-        return zero->next;
+        if(zt){
+            zt->next=oh;
+        }
+        if(ot){
+            ot->next=th;
+        }
+        if(!ot && zt){
+            zt->next=th;
+        }
+        if(tt)
+            tt->next=NULL;
+        if(zh){
+            return zh;
+        }
+        if(oh){
+            return oh;
+        }
+        return th;
     }
 };
 
