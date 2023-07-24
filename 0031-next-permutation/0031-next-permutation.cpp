@@ -1,22 +1,24 @@
 class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
-        
-        int i = nums.size()-1;
-        while(i>0 && nums[i] <= nums[i-1])i--;
-        i--;
-        if(i<0){
-            reverse(nums.begin(),nums.end());
-            return ;
+        int n = nums.size();
+        int i= n-2;
+        while(i>=0){
+            if(nums[i]>=nums[i+1])i--;
+            else{
+            
+                break;
+            }
         }
-        cout<<i<<endl;
-        int j = nums.size()-1;
-        while(j >0 && nums[i]>=nums[j])j--;
-        
-        cout<<j<<endl;
-    
-        swap(nums[i],nums[j]);
-        reverse(nums.begin()+i+1,nums.end());
-        
+        if(i!=-1){
+            int j = n-1;
+            while(nums[j]<=nums[i]){
+                j--;
+            }
+            swap(nums[i], nums[j]);
+            
+            
+        }
+        reverse(nums.begin()+i+1, nums.end());
     }
 };
