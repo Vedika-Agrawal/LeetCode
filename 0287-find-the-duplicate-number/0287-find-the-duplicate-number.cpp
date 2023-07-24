@@ -2,7 +2,7 @@ class Solution {
 public:
     int solve(vector<int>&nums, int l , int h){
         while(l<=h){
-            int mid = l + (h-l)/2;
+            int mid = (l+h)/2;
             int cnt =0;
             for(auto it : nums){
              if(mid>=it)cnt++;   
