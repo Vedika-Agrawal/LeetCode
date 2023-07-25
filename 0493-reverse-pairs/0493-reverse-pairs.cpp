@@ -1,54 +1,56 @@
 class Solution {
 public:
-    int ans;
-    void merge(int low,int mid,int high,vector<int>& nums){
-        int left=low,right=mid+1;
-        vector<int> temp;
-        while(left<=mid && right<=high){
-            if((long long)nums[left]>((long long)2*nums[right])){
-                ans+=(mid-left+1);
-                right++;
+    #define ll long long 
+    
+    ll mergeTwo(ll st, ll end, ll mid, vector<int>&arr){
+        vector<ll>temp;
+        ll l=st, r = mid+1;
+        ll cnt = 0;
+        
+        while(l<=mid && r<=end){
+            if((ll)arr[l]>(ll)arr[r]*2){
+                cnt += mid- l+1;
+                // temp.push_back(arr[r]);
+                r++;
             }
             else{
-                left++;
+                // temp.push_back(arr[l]);
+                l++;
             }
         }
-        left=low,right=mid+1;
-        while(left<=mid && right<=high){
-            if(nums[left]<=nums[right]){
-                temp.push_back(nums[left]);
-                left++;
-            }
-            else{
-                temp.push_back(nums[right]);
-                right++;
-            }
+        l = st, r = mid+1;
+        while(l<=mid){
+            temp.push_back(arr[l]);
+            l++;
         }
-        while(left<=mid){
-            temp.push_back(nums[left]);
-            left++;
+         while(r<=end){
+            temp.push_back(arr[r]);
+            r++;
         }
-        while(right<=high){
-            temp.push_back(nums[right]);
-            right++;
+        sort(temp.begin(), temp.end());
+        int k =0 ;
+        for(ll i = st; i<=end; i++){
+            arr[i] = temp[k];
+            k++;
         }
-        for(int i=low;i<=high;i++){
-            nums[i]=temp[i-low];
-        }
+        return cnt;
+        
+        
     }
-    void mergeSort(int low,int high,vector<int> &nums){
-        int ans=0;
-        if(low<high){
-            int mid=(low+high)/2;
-            mergeSort(low,mid,nums);
-            mergeSort(mid+1,high,nums);
-            merge(low,mid,high,nums);
+
+    ll mergesort(ll st, ll end, vector<int>&arr){
+        ll cnt= 0;
+        if(st<end){
+            ll mid = (st+end)/2;
+            cnt += mergesort(st, mid, arr);
+            cnt += mergesort(mid+1,end, arr);
+            cnt += mergeTwo(st,end,mid,arr);
         }
+        return cnt;
     }
+    
     int reversePairs(vector<int>& nums) {
-        int n=nums.size();
-        ans=0;
-        mergeSort(0,n-1,nums);
-        return ans;
+        int n = nums.size();
+         return mergesort(0, n-1, nums);
     }
 };
