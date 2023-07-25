@@ -50,23 +50,16 @@ public:
         
         copyll(head); 
         copyrp(head);
+        
         Node* curr = head;
         Node* dummy = new Node(0);
         Node* curr2 =  dummy;
         
-        
         while(curr){
-            
-            
-             // curr2->next=curr2->next?curr2->next->next:NULL;
-             curr2->next = curr->next;
-             curr2 = curr2->next;
-            
-            
-           curr->next = curr->next->next;
-           
+            curr2->next = curr->next;
+            curr2 = curr2->next;
+            curr->next = curr->next->next;
             curr = curr->next;
-           
         }
         
         return dummy->next;
