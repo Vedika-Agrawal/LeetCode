@@ -1,35 +1,36 @@
 class Solution {
 public:
-    vector<int> majorityElement(vector<int>& v) {
-        int c1= 0, c2 =0, e1= -1, e2= -1;
-        for(auto it: v){
+    vector<int> majorityElement(vector<int>& nums) {
+        int ans1 = INT_MIN, cnt1= 0;
+        int ans2 = INT_MIN, cnt2 =0;
+        
+        for(auto it: nums){
             
-            if(it==e1)c1++;
-            else if(it==e2)c2++;
-            else if(c1==0){
-                e1 = it;
-                c1++;
+            if(ans1==it)cnt1++;
+            else if(ans2==it)cnt2++;
+            else if(cnt1==0){
+                ans1 = it;
+                cnt1++;
             }
-            else if(c2==0){
-                e2 = it;
-                c2++;
+            else if(cnt2==0){
+                ans2 = it;
+                cnt2++;
             }
             else{
-                c1--;
-                c2--;
+                cnt1--;
+                cnt2--;
             }
         }
         
-        c1= 0,c2=0;
-        for(auto it: v){
-            if(it==e1)c1++;
-            else if(it==e2)c2++;
+        cout<<ans1<<" "<<ans2<<endl;
+        vector<int>res;
+        cnt1=0, cnt2= 0 ;
+        for(auto it: nums){
+            if(it==ans1)cnt1++;
+            if(it==ans2)cnt2++;
         }
-        
-        vector<int>ans;
-        if(c1 > v.size()/3)ans.push_back(e1);
-        if(c2 > v.size()/3)ans.push_back(e2);
-        return ans;
-        
+        if(cnt1 > nums.size()/3)res.push_back(ans1);
+        if(cnt2 > nums.size()/3)res.push_back(ans2);
+        return res;
     }
 };
