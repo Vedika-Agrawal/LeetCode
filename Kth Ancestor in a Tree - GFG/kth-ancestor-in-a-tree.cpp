@@ -114,8 +114,9 @@ struct Node
 
 unordered_map<int,int>mp;
 void solve(Node* root, int par){
-    if(!root)return ;
+    if(!root )return ;
     mp[root->data]= par;
+    
     if(root->left){
         solve(root->left, root->data);
     }
