@@ -1,30 +1,38 @@
 class Solution {
 public:
-    vector<vector<int> > combinationSum2(vector<int> &num, int target) 
-    {
-        vector<vector<int>> res;
-        sort(num.begin(),num.end());
-        vector<int> local;
-        findCombination(res, 0, target, local, num);
-        return res;
+    int n;
+    vector<vector<int>>ans;
+    
+    void solve(vector<int>can, int idx, int tar, vector<int>&temp){
+        if(tar==0){
+            ans.push_back(temp);
+            return ;
+        }
+        if(idx>=n)return ;
+        
+        
+        
+        // nottake 
+        int j = idx;
+        while(j<n && can[j]==can[idx])j++;
+        
+        solve(can, j, tar , temp );
+        
+        // take 
+        if(tar-can[idx]>=0){
+             temp.push_back(can[idx]);
+            solve(can, idx+1, tar-  can[idx], temp);
+            temp.pop_back();
+
+        }
+       
+        
     }
-    void findCombination(vector<vector<int>>& res, const int order, const int target, vector<int>& local, const vector<int>& num)
-    {
-        if(target==0)
-        {
-            res.push_back(local);
-            return;
-        }
-        else
-        {
-            for(int i = order;i<num.size();i++) // iterative component
-            {
-                if(num[i]>target) return;
-                if(i&&num[i]==num[i-1]&&i>order) continue; // check duplicate combination
-                local.push_back(num[i]),
-                findCombination(res,i+1,target-num[i],local,num); // recursive componenet
-                local.pop_back();
-            }
-        }
+    vector<vector<int>> combinationSum2(vector<int>& can, int tar) {
+       n = can.size() ;
+        vector<int>temp;
+        sort(can.begin(),can.end());
+        solve(can, 0, tar, temp);
+        return ans;
     }
 };
