@@ -1,55 +1,53 @@
 class Solution {
 public:
-    
     vector<vector<string>>ans;
+    int n ;
     
-    
-    bool isSafe(int row, int col , vector<string>board, int n){
-        for(int i = row, j = col-1; j >=0 ; j--){
-            if(board[i][j]=='Q')return false;
+
+    bool isSafe(int r, int c, vector<string>&chess){
+        
+        for(int i = r, j = c-1; j>=0; j--){
+            if(chess[i][j]=='Q')return false;
         }
         
-        for(int i = row-1, j = col-1; j >=0 && i>=0 ; j--, i--){
-            if(board[i][j]=='Q')return false;
+        for(int i = r-1, j = c-1; j>=0 && i>=0; j--, i--){
+            if(chess[i][j]=='Q')return false;
         }
         
-         for(int i = row-1, j = col-1; j >=0 && i>=0 ; j--, i--){
-            if(board[i][j]=='Q')return false;
+         for(int i = r+1, j = c-1; j>=0 && i<n; j--, i++){
+            if(chess[i][j]=='Q')return false;
         }
-        
-         for(int i = row+1, j = col-1; j >=0 && i<n ; j--, i++){
-            if(board[i][j]=='Q')return false;
-         }
         return true;
         
+        
     }
     
-    void solve(int col, vector<string>&board,int n){ 
-        
-        if(col==n){
-            ans.push_back(board);
+    
+    void solve( int c, vector<string>&chess){
+         if(c==n){
+            ans.push_back(chess);
             return;
         }
-        for(int row =0;row<n;row++){
-            if(isSafe(row,col,board,n)){
-                board[row][col]='Q';
-                solve(col+1,board,n);
-                board[row][col]='.';
-            }
-            
-        }
         
+        for(int r = 0; r<n;r++){
+            if(isSafe(r,c,chess)){
+                chess[r][c]='Q';
+                solve(c+1,chess);
+                chess[r][c]='.';
+            }
+        }
     }
     
-    vector<vector<string>> solveNQueens(int n) {
-        // if(n==1)return ans.push({"Q"});
+    
+    vector<vector<string>> solveNQueens(int N) {
+        n = N;
         if(n==2 || n==3)return ans;
-        vector<string>board(n);
+        vector<string>chess(n);
         string s (n,'.');
-        for(int i=0;i<n;i++){
-            board[i]=s;
+         for(int i=0;i<n;i++){
+            chess[i]=s;
         }
-        solve(0,board,n);
-        return  ans;
+        solve(0,chess);
+        return ans;
     }
 };
