@@ -20,19 +20,15 @@ public:
         }
         
         if(mx.size()-mn.size()==2){
-            // mn.push(mx.top());
-            // mx.pop();
-            int x = mx.top();
-            mn.push(x);
+            mn.push(mx.top());
             mx.pop();
+           
         }
         else if(mn.size()-mx.size()==2){
-            // mx.push(mn.top());
-            // mn.pop();
-            int x = mn.top();
-            mx.push(x);
+            mx.push(mn.top());
             mn.pop();
         }
+         
        
         
     }
