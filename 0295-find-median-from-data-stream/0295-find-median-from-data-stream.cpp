@@ -1,56 +1,51 @@
 class MedianFinder {
 public:
-    priority_queue<int>pq_max;
-    priority_queue<int, vector<int>, greater<int>>pq_min;
+    priority_queue<int>mx;
+    priority_queue<int, vector<int>, greater<int>>mn;
+    
     MedianFinder() {
         
     }
     
-    // max heap // min heap =============
     void addNum(int num) {
-        
-        if(pq_max.size()==0){
-            pq_max.push(num);
+         if(mx.size()==0){
+            mx.push(num);
             return ;
         }
-        
-        if(num<=pq_max.top())
-        {
-            pq_max.push(num); 
-             if(pq_max.size()-pq_min.size()>1){
-                pq_min.push(pq_max.top());
-                pq_max.pop();
-            }
+        if(mx.top()>=num){
+            mx.push(num);
+        }
+        else{
+            mn.push(num);
         }
         
-        
-        else {
-             pq_min.push(num); 
-              if(pq_min.size()-pq_max.size()>1){
-                pq_max.push(pq_min.top());
-                pq_min.pop();
-            }
-        
+        if(mx.size()-mn.size()==2){
+            // mn.push(mx.top());
+            // mx.pop();
+            int x = mx.top();
+            mn.push(x);
+            mx.pop();
         }
-            
-        
+        else if(mn.size()-mx.size()==2){
+            // mx.push(mn.top());
+            // mn.pop();
+            int x = mn.top();
+            mx.push(x);
+            mn.pop();
+        }
        
-        
-       
-        cout<<pq_max.top()<<endl;
         
     }
     
     double findMedian() {
-        double temp;
-        if(pq_max.size()>pq_min.size())return (double)pq_max.top();
-        if(pq_min.size()>pq_max.size())return (double)pq_min.top();
-        
+        // cout<<mn.top()<<" "<<mx.top()<<endl;
+        if(mx.size()>mn.size())return mx.top();
+        else  if(mn.size()>mx.size())return mn.top();
         else{
-             temp = (pq_max.top() + pq_min.top())/(double)2;
+            double sum =(double) (mn.top() + mx.top())/2.0;
+            return sum;
         }
-        return temp;
-        // return 0.0;
+        
     }
 };
 
