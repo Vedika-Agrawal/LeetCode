@@ -1,22 +1,35 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        stringstream st(s);
-        string temp = "";
-        vector<string>k;
-        while(getline(st,temp, ' ')){
-            if(temp.size()>0){
-                k.push_back(temp);
+        // s+=' ';
+        int i=0 , k = 0,j=0;
+        reverse(s.begin(),s.end());
+        int n = s.size();
+        while(i<n){
+            while(i<n && s[i]==' ')i++;
+            // j = i;
+            // int pp = k;
+            // while(j<n && s[j]!=' ')j++;
+             if(j!=0 && i<n){
+                s[j]=' ';
+                j++; 
+            } 
+            int pp = j;
+            while(i<n && s[i]!=' '){
+                s[j++]= s[i++];
+                // k++;
+                // i++;
             }
-        }
-        reverse(k.begin(),k.end());
-        string ans = k[0];
-        for(int i=1;i<k.size();i++){
-            string it = k[i];
-            ans+=' ';
-            ans+= it;
             
+            reverse(s.begin()+pp , s.begin()+j);
+            //  if(i<n){
+            //     s[k]=' ';
+            //     k++; 
+            // } 
+           
         }
-        return ans;
+        s.resize(j);
+        // cout<<s<<endl;
+        return s;
     }
 };
