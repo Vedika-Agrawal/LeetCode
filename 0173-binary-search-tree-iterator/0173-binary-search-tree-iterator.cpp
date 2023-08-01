@@ -10,31 +10,37 @@
  * };
  */
 class BSTIterator {
-    stack<TreeNode*>st;
 public:
-    BSTIterator(TreeNode* root) {
-        pushAll(root);
+    TreeNode* head;
+    stack<TreeNode*>st;
+    
+     void solve(TreeNode* root){
+
+         if(root==NULL)return ;
+            st.push(root);
+            solve(root->left);
+         
     }
     
+    BSTIterator(TreeNode* root) {
+       head= root; 
+        solve(root);
+    }
+    
+   
+    
+    
     int next() {
-        TreeNode* topNode = st.top(); st.pop();
-        pushAll(topNode->right);
-        return topNode->val;
+        auto it = st.top();
+        st.pop();
+        solve(it->right);
+        return it->val;
     }
     
     bool hasNext() {
-        return !st.empty();
-    }
-    
-    private:
-    void pushAll(TreeNode* root){
-        while(root){
-            st.push(root);
-            root =root->left;
-        }
+       return st.size(); 
     }
 };
-
 
 /**
  * Your BSTIterator object will be instantiated and called as such:
