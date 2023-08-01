@@ -1,39 +1,26 @@
 class Solution {
 public:
     string longestPalindrome(string s) {
-        int n=s.size();
-        int mx=1;
-        int st=0,en=0;
-        vector<vector<int>> dp(n,vector<int>(n,1));
-        for(int gap=1;gap<n;gap++){
-            for(int i=0,j=gap+i;j<n;i++,j++){
-                if(gap==0){
+        int mx = 1 , idx= 0;
+        vector<vector<int>>dp(s.size(),vector<int>(s.size(), 0));
+        
+        for(int gap =0;gap<s.size();gap++){
+            for(int i = 0 , j= gap+i ; j<s.size(); j++, i++){
+                if(gap==0)dp[i][j]=1;
+                else if(gap==1 && s[j] == s[i] && s[j-1]==s[j]){
                     dp[i][j]=1;
-                }
-                else if(gap==1){
-                    if(s[i]==s[j] && s[j-1]==s[j]){
-                        dp[i][j]=1;
-                    }
-                    else{
-                        dp[i][j]=0;
-                    }
                 }
                 else{
                     if(s[i]==s[j]){
-                        dp[i][j]=dp[i+1][j-1];
-                    }
-                    else{
-                        dp[i][j]=0;
+                        dp[i][j]=  dp[i+1][j-1];
                     }
                 }
-                if(dp[i][j]==1 && mx<gap+1){
-                    mx=gap+1;
-                    cout<<mx<<endl;
-                    st=i;
-                    en=j;
+                if(dp[i][j]==1 && mx < gap+1){
+                    mx = gap+1;
+                    idx = i;
                 }
             }
         }
-        return s.substr(0+st,mx);
+        return s.substr(idx, mx);
     }
 };
