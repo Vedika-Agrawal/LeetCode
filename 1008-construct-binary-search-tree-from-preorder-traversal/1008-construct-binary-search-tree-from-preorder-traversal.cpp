@@ -11,22 +11,18 @@
  */
 class Solution {
 public:
-    TreeNode* solve(vector<int>& pre, int &st, int range){
-        if(st>=pre.size()  || pre[st]>range)return NULL;
+    TreeNode* solve(vector<int>&pre, int &st, int &end){
+        if(st>=pre.size() || pre[st]>end)return NULL;
         TreeNode* root = new TreeNode(pre[st]);
-        // int idx  = *upper_bound(pre.begin(),pre.end(), pre[st]);
         st++;
-        root->left = solve(pre, st, root->val);
-        
-        root->right = solve(pre, st , range);
-        
+        root->left = solve(pre, st,root->val );
+        root->right = solve(pre, st, end);
         return root;
-        
-        
     }
+    
     TreeNode* bstFromPreorder(vector<int>& pre) {
-        int n = pre.size();
-        int idx = 0;
-        return solve(pre, idx, INT_MAX);
+        int i = 0;
+        int j = INT_MAX;
+        return solve(pre,i,j);
     }
 };
