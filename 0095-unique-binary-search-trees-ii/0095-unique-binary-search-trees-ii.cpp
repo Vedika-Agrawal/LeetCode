@@ -13,15 +13,16 @@ class Solution {
 public:
     vector<TreeNode*> solve(int st, int end){
         vector<TreeNode*>ans;
+         if(st>end){
+            ans.push_back(NULL);
+            return ans;
+        }
         if(st==end){
             TreeNode* root  = new TreeNode(st);
             ans.push_back(root);
             return ans;
         }
-         if(st>=end){
-            ans.push_back(NULL);
-            return ans;
-        }
+        
         
         
         for(int i=st;i<=end;i++){
