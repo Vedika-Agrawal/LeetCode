@@ -1,28 +1,28 @@
 class Solution {
 public:
-    vector<vector<int>> groupThePeople(vector<int>& groupSizes) {
-        vector<vector<int>> ans;
-        map<int, vector<int>> mp;
-        
-        for (int i = 0; i < groupSizes.size(); i++) {
-            mp[groupSizes[i]].push_back(i);
+    vector<vector<int>> groupThePeople(vector<int>& gp) {
+        vector<vector<int>>ans;
+        map<int, vector<int>>mp;
+        for(int i=0;i<gp.size();i++){
+          mp[gp[i]].push_back(i);
         }
-        
-        for (auto it : mp) {
-            vector<int> temp;
-            int groupSize = it.first;
-            auto people = it.second;
-            
-            for (int i = 0; i < people.size(); i++) {
-                temp.push_back(people[i]);
-                
-                if (temp.size() == groupSize) {
+        for(auto it: mp){
+            vector<int>temp;
+            int a = it.first;
+            auto b = it.second;
+            // cout<<a<<" "<<b.size()<< endl;
+            int i=0;
+            while(i<b.size()){
+                temp.push_back(b[i++]);
+                if(temp.size()==a){
                     ans.push_back(temp);
                     temp.clear();
                 }
+                
+
             }
         }
-        
+
         return ans;
     }
 };
