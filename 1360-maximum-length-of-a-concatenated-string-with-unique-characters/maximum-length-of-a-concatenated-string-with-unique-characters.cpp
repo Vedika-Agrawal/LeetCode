@@ -1,46 +1,31 @@
 class Solution {
 public:
-    bool isPossible(string s, vector<int>& chr) {
-        for (auto it : s) {
-            if (chr[it - 'a'] > 0) return false;
+    bool isPossibleToTake(vector<int>&currAnsCharFreq, string curr){
+        set<char>st(curr.begin(),curr.end());
+        if(st.size()!=curr.size())return false;
+        for(auto it: curr){
+           if( currAnsCharFreq[it-'a']!=0)return false;
         }
         return true;
     }
 
-    bool isUnique(string s) {
-        unordered_set<char> uniqueChars;
-        for (auto it : s) {
-            if (uniqueChars.count(it) > 0) return false;
-            uniqueChars.insert(it);
-        }
-        return true;
-    }
-
-    int solve(vector<string>& arr, int i, vector<int>& chr) {
-        if (i == arr.size()) return 0;
-
-        // Skip the current string
-        int notTake = solve(arr, i + 1, chr);
-
-        // Take the current string if it is unique and possible
+    int solve(vector<string>&arr, int currIdx, vector<int>&currAnsCharFreq){
+        if(currIdx >= arr.size())return 0;
+        int notTake = solve(arr, currIdx+1, currAnsCharFreq);
         int take = 0;
-        string temp = arr[i];
-
-        if (isUnique(temp) && isPossible(temp, chr)) {
-            for (auto it : temp) {
-                chr[it - 'a']++;
+        if(isPossibleToTake(currAnsCharFreq, arr[currIdx])){
+            for(auto it: arr[currIdx]){
+                currAnsCharFreq[it-'a']++;
             }
-            take = temp.size() + solve(arr, i + 1, chr);
-            for (auto it : temp) {
-                chr[it - 'a']--;  // Backtrack
+            take = arr[currIdx].size() + solve(arr, currIdx+1, currAnsCharFreq);
+            for(auto it: arr[currIdx]){
+                currAnsCharFreq[it-'a']--;
             }
         }
-
-        return max(notTake, take);
+        return max(take, notTake);
     }
-
     int maxLength(vector<string>& arr) {
-        vector<int> alp(26, 0);
-        return solve(arr, 0, alp);
+        vector<int>currAnsCharfreq(26, 0);
+        return solve(arr, 0, currAnsCharfreq);
     }
 };
