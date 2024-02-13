@@ -11,7 +11,7 @@ public:
 
             int midEnd = (totalSum - leftSum)/2;
             int low = lower_bound(prefixSum.begin()+left+1, prefixSum.end(), leftSum*2)-prefixSum.begin();
-            int up = upper_bound(prefixSum.begin() + low, prefixSum.begin()+n-1, midEnd+leftSum)-prefixSum.begin();
+            int up = upper_bound(prefixSum.begin() + low, prefixSum.end()-1, midEnd+leftSum)-prefixSum.begin();
             cnt = (cnt + up - low)% mod;
         }
         return cnt%mod;;
