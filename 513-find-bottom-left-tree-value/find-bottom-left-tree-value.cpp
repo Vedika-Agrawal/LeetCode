@@ -1,21 +1,21 @@
 class Solution {
 public:
     int findBottomLeftValue(TreeNode* root) {
-        int maxDepth = 0;
-        int leftmostValue = 0;
-        findBottomLeftValueHelper(root, 1, maxDepth, leftmostValue);
-        return leftmostValue;
+        int maxD = 0;
+        int leftVal = 0;
+        fBLVHelper(root, 1, maxD, leftVal);
+        return leftVal;
     }
     
-    void findBottomLeftValueHelper(TreeNode* root, int depth, int& maxDepth, int& leftmostValue) {
+    void fBLVHelper(TreeNode* root, int depth, int& maxD, int& leftVal) {
         if (!root) return;
         
-        if (depth > maxDepth) {
-            maxDepth = depth;
-            leftmostValue = root->val;
+        if (depth > maxD) {
+            maxD = depth;
+            leftVal = root->val;
         }
         
-        findBottomLeftValueHelper(root->left, depth + 1, maxDepth, leftmostValue);
-        findBottomLeftValueHelper(root->right, depth + 1, maxDepth, leftmostValue);
+        fBLVHelper(root->left, depth + 1, maxD, leftVal);
+        fBLVHelper(root->right, depth + 1, maxD, leftVal);
     }
 };
