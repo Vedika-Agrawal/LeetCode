@@ -1,32 +1,21 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
     int findBottomLeftValue(TreeNode* root) {
-        if(!root)return 0;
-        queue<TreeNode*>q;
-        int ans = root->val;
-        q.push(root);
-        while(q.size()){
-            int sz = q.size();
-            bool first = 0;
-            while(sz--){
-                auto node = q.front();
-                if(first==0) ans = node->val, first = 1;
-                q.pop();
-                if(node->left) q.push(node->left);
-                if(node->right) q.push(node->right);
-            }
+        int maxDepth = 0;
+        int leftmostValue = 0;
+        findBottomLeftValueHelper(root, 1, maxDepth, leftmostValue);
+        return leftmostValue;
+    }
+    
+    void findBottomLeftValueHelper(TreeNode* root, int depth, int& maxDepth, int& leftmostValue) {
+        if (!root) return;
+        
+        if (depth > maxDepth) {
+            maxDepth = depth;
+            leftmostValue = root->val;
         }
-        return ans;
+        
+        findBottomLeftValueHelper(root->left, depth + 1, maxDepth, leftmostValue);
+        findBottomLeftValueHelper(root->right, depth + 1, maxDepth, leftmostValue);
     }
 };
