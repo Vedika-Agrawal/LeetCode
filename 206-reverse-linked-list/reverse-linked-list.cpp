@@ -10,29 +10,15 @@
  */
 class Solution {
 public:
-    ListNode* head = NULL;
-
-    void addFirst(ListNode* node){
-        //  if(head==NULL){
-        //     node->next = NULL;
-        //     head = node;
-        //     return;
-        // }
-        node->next = head;
-        head = node;
-    }
-
-    void deleteFirst(ListNode* node){
-        node = node ->next;
-    }
-    ListNode* reverseList(ListNode* node) {
-        ListNode * curr = node;
+    ListNode* reverseList(ListNode* head) {
+        if(!head || !head->next)return head;
+        ListNode * prev = NULL, *curr =head;
         while(curr){
-            ListNode * fwd = curr ->next;
-            addFirst(curr);
-            // deleteFirst(curr);
+            ListNode* fwd = curr->next;
+            curr->next = prev;
+            prev = curr;
             curr = fwd;
         }
-        return head;
+        return prev ;
     }
 };
