@@ -1,35 +1,35 @@
+#include <vector>
+#include <algorithm>
+using namespace std;
+
 class Solution {
 public:
-    int maxDistance(vector<int>& position, int m) {
-        sort(position.begin(), position.end());
-        int lo = 1;
-        int hi = (position.back() - position[0]) / (m - 1);
-        int ans = 1;
-        while (lo <= hi) {
-            int mid = lo + (hi - lo) / 2;
-            if (canWePlace(position, mid, m)) {
+    bool isPossible(vector<int>& pos, int m, int minForce) {
+        int cnt = 1;
+        int lastPlaced = pos[0];
+        for(int i = 1; i < pos.size(); i++) {
+            if(pos[i] - lastPlaced >= minForce) {
+                cnt++;
+                lastPlaced = pos[i];
+            }
+            if(cnt >= m) return true;
+        }
+        return false;
+    }
+
+    int maxDistance(vector<int>& pos, int m) {
+        sort(pos.begin(), pos.end());
+        int l = 1, h = pos.back() - pos[0];
+        int ans = 0;
+        while(l <= h) {
+            int mid = l + (h - l) / 2;
+            if(isPossible(pos, m, mid)) {
                 ans = mid;
-                lo = mid + 1;
+                l = mid + 1;
             } else {
-                hi = mid - 1;
+                h = mid - 1;
             }
         }
         return ans;
-    }
-
-private:
-    bool canWePlace(const vector<int>& arr, int dist, int balls) {
-        int countBalls = 1;
-        int lastPlaced = arr[0];
-        for (int i = 1; i < arr.size(); i++) {
-            if (arr[i] - lastPlaced >= dist) {
-                countBalls++;
-                lastPlaced = arr[i];
-            }
-            if (countBalls >= balls) {
-                return true;
-            }
-        }
-        return false;
     }
 };
